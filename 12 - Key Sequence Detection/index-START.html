@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+  let codes       = '',
+      codeChange  = 'ArrowLeftArrowUpArrowRightArrowDown5',
+      arrayWith   = [],
+      anotherSec  = 'wesbos'
+  const addingKeys = e =>{
+    codes += e.key
+    arrayWith.push( e.key )
+    arrayWith.splice( -anotherSec.length - 1 , arrayWith.length - anotherSec.length )
+
+    if( arrayWith.join('').includes( anotherSec ) ){
+      console.log('cool you did it')
+      cornify_add()
+    }
+
+    if( codes === codeChange ){
+      document.body.innerHTML = '<h1>Cool!</h1>'
+      codes = ''
+    }
+    if( codes.length >= codeChange.length ){
+      codes = ''
+    }
+  }
+  window.addEventListener( 'keyup', addingKeys )
+</script>
+</body>
+</html>

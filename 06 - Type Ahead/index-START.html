@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+const cities = []
+const search = document.querySelector( '.search' ), sugg = document.querySelector( '.suggestions' )
+
+const data = async () => {
+  return await fetch( endpoint )
+}
+data()
+  .then( raw => raw.json() )
+  .then( data => cities.push( ...data ) )
+
+function wordMatch ( wordMatches, cities ){
+  if( !wordMatches || !( cities instanceof Array ) ) 
+    return 'Please insert valid information ' 
+  const regex = new RegExp( wordMatches, 'gi' )
+  return cities.filter( 
+    ({ city, state }) => city.match( regex ) || state.match( regex ) )
+}
+
+function matchDisplay (){
+  if( !this.value ){
+    sugg.innerHTML = `
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    `
+    return
+  }
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  }
+
+  const infoCities = wordMatch( this.value, cities )
+  let   $html
+
+  $html = infoCities.map( inCity =>{ 
+    let regex = new RegExp( this.value, 'gi' ),
+        cityName = inCity.city
+          .replace( regex, `<span class="hl">${this.value}</span>`),
+        cityState = inCity.state
+          .replace( regex, `<span class="hl">${this.value}</span>`)
+      return ` <li>
+          <span>${cityName} ${cityState}</span>  
+          <span>${numberWithCommas( inCity.population )}</span>
+        </li>`
+      }).join('')
+      
+  sugg.innerHTML = $html
+}
+
+search.addEventListener( 'input', matchDisplay )
+
+</script>
+</body>
+</html>
