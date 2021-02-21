@@ -38,21 +38,46 @@
   .three {
     background: coral;
   }
+
+  .con_btn{
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>
 
 <button></button>
+<section>
+  <article class="con_btn">
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+    <button>5</button>
+  </article>
+</section>
 <script>
   const divs  = document.querySelectorAll( 'div' ),
-        btn   = document.querySelector( 'button' )
+        btn   = document.querySelector( 'button' ),
+        cbtn  = document.querySelector( '.con_btn' )
 
     function clickDivs( e ) {
-      console.log( this.classList.value );
+      //console.log( this.classList.value );
       e.stopPropagation()
     }
 
   divs.forEach( div => div.addEventListener( 'click', clickDivs, { 
       capture: false
     } ) )
+    document.body.addEventListener( 'click', () => {console.log('Body');})
+    cbtn.addEventListener( 'click', e => {
+      console.log(e.target);
+      e.stopPropagation()
+    })
 </script>
 </body>
 </html>
