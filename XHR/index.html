@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>XHR</title>
+  </head>
+  <body>
+    
+    <script>
+      const xhr = new XMLHttpRequest()
+        let jsn = ''
+      console.log( xhr )
+
+      function callBack(e){
+        const { target: {
+          readyState,
+          response,
+          responseText,
+          status
+        } } = e
+        
+        if( readyState < 4 || status !== 200 ){
+          return
+        }
+        jsn = JSON.parse( responseText )
+        console.log(jsn )
+      }
+
+      fetch( 'https://hacker-news.firebaseio.com/v0/item/8863.json?print=pretty', {
+        method: 'GET'
+      } )
+      .then( raw => raw.json() )
+      .then( data => console.log( data ) )
+      .catch( err => console.err( err ) )
+      
+      xhr.onreadystatechange = callBack
+      xhr.open(
+        'GET', 
+        `https://hacker-news.firebaseio.com/v0/item/8863.json?print=pretty`,
+        true
+      )
+      xhr.send( '' )
+
+      
+
+    </script>
+  </body>
+</html>
