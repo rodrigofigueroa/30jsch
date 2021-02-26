@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <h2>HUUU</h2>
+    <a href=""> <span> SPaaan </span> </a>
+    <a href=""> HELlo </a>
+    <div>
+      <h3>Head</h3>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+        Expedita perferendis repellendus deleniti at amet ducimus 
+        quia voluptas optio molestiae asperiores? Blanditiis inventore 
+        quam veritatis expedita et voluptatem tempora, quasi ex!</p>
+    </div>
+  </div>
+  <script>
+    function walkDOM( domEl, callback ){
+      
+      for( let elm of domEl.children ){
+        if( elm.hasChildNodes() ){
+          callback( elm )
+          walkDOM( elm, function( dom ){
+            dom.addEventListener( 'click', function(e){
+              console.log( e.target );
+              e.stopPropagation()
+            })
+          })
+        }
+      }
+      
+    }
+    walkDOM( document.body, function( dom ){
+      dom.addEventListener( 'click', function(e){
+        console.log( this );
+        e.stopPropagation()
+      })
+    })
+  </script>
+</body>
+</html>
