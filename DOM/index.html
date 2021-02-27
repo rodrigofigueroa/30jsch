@@ -16,10 +16,23 @@
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
         Expedita perferendis repellendus deleniti at amet ducimus 
         quia voluptas optio molestiae asperiores? Blanditiis inventore 
-        quam veritatis expedita et voluptatem tempora, quasi ex!</p>
+        quam veritatis expedita et voluptatem tempora, quasi ex!
+      </p>
+      <div>
+        <button onclick="clickJoke()">
+          Click ME
+        </button>
+      </div>
     </div>
   </div>
   <script>
+    function clickJoke(){
+      if( confirm('Come On') ){
+        alert(' HA ha ha')
+      }else{
+        alert(' HA ha ha :D')
+      }
+    }
     function walkDOM( domEl, callback ){
       
       for( let elm of domEl.children ){
@@ -35,12 +48,35 @@
       }
       
     }
-    walkDOM( document.body, function( dom ){
-      dom.addEventListener( 'click', function(e){
-        console.log( this );
-        e.stopPropagation()
-      })
-    })
+    // walkDOM( document.body, function( dom ){
+    //   dom.addEventListener( 'click', function(e){
+    //     console.log( this );
+    //     e.stopPropagation()
+    //   })
+    // })
+    function removeListeners( nodeElements ){
+      for( let element of nodeElements.children ){
+        if( element.getAttribute( 'onclick' ) ){
+          let elmAttribute = element.getAttribute( 'onclick' )
+          console.log( `This tag has onclick event :( ${ element.localName }` )
+          element.setAttribute( 'onclick', null )
+          console.log( element );
+          element.parentNode.innerHTML = ''
+        }
+        if( element.hasChildNodes ){
+          removeListeners( element )
+        }
+      
+      }
+    }
+    removeListeners( document.body )
+    function include( urlJs ){
+      const newScript = document.createElement( 'script' )
+            newScript.src = urlJs
+      document.head
+      .appendChild( newScript )
+    }
+    setTimeout( () => include( './alertTime.js' ), 5000 )
   </script>
 </body>
 </html>
