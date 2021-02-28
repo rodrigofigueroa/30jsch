@@ -19,11 +19,21 @@
         quam veritatis expedita et voluptatem tempora, quasi ex!
       </p>
       <div>
+        <button>
+          Click :D
+        </button>
         <button onclick="clickJoke()">
           Click ME
         </button>
       </div>
     </div>
+    <section>
+      <article>
+        ONE Article
+        <a href="https://www.google.com"> Google </a>
+        <a href="https://www.google.com"> Google </a>
+      </article>
+    </section>
   </div>
   <script>
     function clickJoke(){
@@ -69,14 +79,56 @@
       
       }
     }
-    removeListeners( document.body )
+    // removeListeners( document.body )
     function include( urlJs ){
       const newScript = document.createElement( 'script' )
             newScript.src = urlJs
       document.head
       .appendChild( newScript )
     }
-    setTimeout( () => include( './alertTime.js' ), 5000 )
+    //setTimeout( () => include( './alertTime.js' ), 5000 )
+
+    function myEvent(){
+      this.addListener = function ( elements, name_event, callback ){
+         if( !elements ) return 
+         if( !( 'forEach' in elements ) ){
+            [].forEach.call( elements, function( element ){
+              element.addEventListener( name_event, callback)
+            })
+            return 
+          }
+        return elements.forEach( element => {
+          element.addEventListener( name_event, callback )
+        })
+      }
+      this.removeListener = function( elements, name_event, callback ){
+         if( !elements ) return 
+        return elements.forEach( element => {
+          element.removeEventListener( name_event, callback )
+        })
+      }
+      this.getEvent = function( event ){
+        return event
+      }
+      this.getTarget = function( event ){
+        return event.target
+      }
+      this.stopPropagation = function ( event ){
+        return event.stopPropagation()
+      }
+      this.preventDefault = function ( event ){
+        return event.preventDefault()
+      }
+    }
+    
+    let newEvent = new myEvent()
+    function myCallback( e ){
+      e = newEvent.getEvent( e )
+      alert( newEvent.getTarget( e ).href )
+      newEvent.preventDefault( e )
+      newEvent.stopPropagation( e )
+    }
+    console.log( newEvent.addListener( document.links, 'click', myCallback ) );
   </script>
 </body>
 </html>
