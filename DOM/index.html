@@ -128,7 +128,37 @@
       newEvent.preventDefault( e )
       newEvent.stopPropagation( e )
     }
-    console.log( newEvent.addListener( document.links, 'click', myCallback ) );
+    // console.log( newEvent.addListener( document.links, 'click', myCallback ) );
+
+    function myCallbackAjax( e ){
+      console.log( e )
+    }
+
+    const ajax = {
+      xhr: new XMLHttpRequest(),
+      request( url, method, callback, body = '' ){
+        this.xhr.open( method, url )
+        this.xhr.send( body )
+        this.xhr.onreadystatechange = function( e ){
+
+          const { target: { readyState, response, responseText, status } } = e
+
+          if( status === 200 && readyState === 4){
+
+            const toJson = JSON.parse( this.responseText )
+            
+            callback( toJson )
+          }
+        }
+      }
+    }
+
+    ajax.request( 
+      'https://hacker-news.firebaseio.com/v0/item/8863.json?print=pretty', 
+      'get', 
+      myCallbackAjax
+    )
+
   </script>
 </body>
 </html>
