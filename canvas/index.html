@@ -7,7 +7,7 @@
   <body>
     <canvas id="can_tag" >
     </canvas>
-    <script>
+    <script defer >
       const canvas  = document.querySelector( '#can_tag' ),
             context = canvas.getContext( '2d' ),
             halfH   = canvas.height,
@@ -15,9 +15,12 @@
 
       canvas.height = window.innerHeight
       canvas.width  =  window.innerWidth
-      
+      // REC
       context.fillStyle = '#000'
       context.fillRect( 50, 60, 20, 20 )
+      context.fillStyle = 'green'
+      context.fillRect( 600, 200, 300, 200 )
+      // line
       context.moveTo( halfH, 0 )
       context.lineTo( halfH, 309 )
       context.moveTo( ( halfH - 50 ), 0 )
@@ -25,10 +28,51 @@
       context.moveTo( 0, halfW )
       context.lineTo( 100, halfW )
       context.stroke()
-      context.fillStyle = 'green'
-      context.fillRect( 600, 200, 300, 200 )
+      // Circle
+      context.beginPath()
+      context.arc( 500, 100, 50, 0, Math.PI ** 2 )
+      // context.arc()
+      // create gradient
+      const grad = context.createLinearGradient( 0, 0, 100, 0 )
+      grad.addColorStop( 0, 'blue' )
+      grad.addColorStop( 1, 'white' )
+      context.fillStyle = grad
+      context.fillRect( 10, 500, 150, 80 )
+      // smile
+      context.moveTo( 300, 200 )
+      context.lineTo( 300, 100 )
+      context.moveTo( 450, 200 )
+      context.lineTo( 300, 200 )
+      context.moveTo( 450, 100 )
+      context.lineTo( 300, 100 )
+      context.moveTo( 450, 200 )
+      context.lineTo( 450, 100 )
+      context.stroke()
 
-      
+      context.beginPath()
+      context.arc( 375, 150, 40, 0, Math.PI ** 2 )
+      context.stroke()
+      context.beginPath()
+      context.arc( 360, 140, 5, 0, Math.PI ** 2 )
+      context.stroke()
+      context.beginPath()
+      context.arc( 390, 140, 5, 0, Math.PI ** 2 )
+      context.stroke()
+      context.beginPath()
+      context.arc( 375, 150, 29, 3.3, 6, Math.PI ** 2 )
+      context.stroke()
+
+      context.beginPath()
+      const grad2 = context.createLinearGradient( 0, 0, 100, 0 )
+      grad2.addColorStop( 1, 'white' )
+      grad2.addColorStop( 1, 'green' )
+      context.fillStyle = grad2 
+      context.fill()
+      context.lineWidth = 5
+      context.strokeStyle = grad2
+      context.arc( 375, 300, 29, 50, 6, Math.PI ** 2 )
+      context.stroke()
+
     </script>
   </body>
 </html>
