@@ -13,7 +13,7 @@ const MYAPP = {
       }
     }else{
       MYAPP.addListener = function(){
-        console.warn( `Dude You Really Needs to Change Browser, this won't Work!`)
+        console.warn( `Dude You Really Needs to Change your Browser, this won't Work!`)
       }
     }
     element.addEventListener( type, callback, conf )
@@ -38,7 +38,22 @@ const MYAPP = {
   },
   eventCross:{
     addEventListener
-  }
+  },
+  domCheck: (function(){
+    function _private (){
+      // privadte
+      console.log('object');
+    }
+    return {
+       setDom(){
+         console.log('setDom');
+         _private()
+       },
+       getDom(){
+        console.log('getDom');
+       }
+      }
+  }())
 }
 
 document.querySelectorAll( 'button' )
@@ -48,3 +63,4 @@ document.querySelectorAll( 'button' )
 )
 
 window.allStyles = MYAPP.checkStyles( document.querySelector( 'button' ) )
+window.domCheck = MYAPP.domCheck
