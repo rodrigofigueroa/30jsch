@@ -56,6 +56,27 @@ const MYAPP = {
   }())
 }
 
+const MY_MODULE = {
+  in_action: (function(){
+    //other modules
+    const another = {
+      another_module: 'Other'
+    }
+    //local Variables and private
+    const local_variableA = 'a',
+          local_variableB = 'b'
+      //private
+    function hidden(){}
+    // public
+    function initModul(){
+      console.log('new Module imported');
+    }
+    return {
+      hi: initModul
+    }
+  })()
+} 
+
 document.querySelectorAll( 'button' )
 .forEach( btn => MYAPP.addListener( btn, 'click', function(e) {
     console.log( this, e )
@@ -64,3 +85,4 @@ document.querySelectorAll( 'button' )
 
 window.allStyles = MYAPP.checkStyles( document.querySelector( 'button' ) )
 window.domCheck = MYAPP.domCheck
+window.MY_MODULE = MY_MODULE
