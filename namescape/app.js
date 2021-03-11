@@ -124,3 +124,18 @@ setTimeout( () => {
     document.body.lastElementChild
   )
 }, 2000)
+
+const createDomElm = function( elementName ){
+  const element = document.createElement( elementName )
+  const addAttr = function( attr, value ){
+    element.setAttribute( attr, value )
+    return this
+  }
+  const addText = function( text ){
+    element.textContent = text
+    return this
+  }
+  return {
+    addAttr, addText, element
+  }
+}
