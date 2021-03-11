@@ -39,6 +39,35 @@ const MYAPP = {
   eventCross:{
     addEventListener
   },
+  dom: {
+    createDom: function( strinElement ){
+      this.element = document.createElement( strinElement )
+      this.addAttr =  function( attr, value ){
+        this.element.setAttribute( attr, value )
+        return this
+      }
+      this.addText = function( text ){
+        this.element.textContent = text
+        return this
+      }
+    }
+  },
+  domPrivate: {
+    createDom: function( strinElement ){
+      const element = document.createElement( strinElement )
+      const addAttr = function( attr, value ){
+        element.setAttribute( attr, value )
+        return this
+      }
+      const addText = function( text ){
+        element.textContent = text
+        return this
+      }
+      return {
+        addAttr, addText, element
+      }
+    }
+  },
   domCheck: (function(){
     function _private (){
       // privadte
@@ -86,3 +115,12 @@ document.querySelectorAll( 'button' )
 window.allStyles = MYAPP.checkStyles( document.querySelector( 'button' ) )
 window.domCheck = MYAPP.domCheck
 window.MY_MODULE = MY_MODULE
+setTimeout( () => {
+  document.body.insertBefore(
+    MYAPP.domPrivate
+      .createDom( 'a' )
+      .addAttr(`href`, 'https://www.duckduckgo.com')
+      .addText( 'This Will go to DuckDuckGo :D' ).element,
+    document.body.lastElementChild
+  )
+}, 2000)
